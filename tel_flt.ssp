@@ -1,0 +1,27 @@
+.fshift 0.01
+.var sf nchan
+.get_keyvalue nchan = NCHAN
+.get_keyvalue sf = SAMPLEFREQ
+.convert to F32
+
+% make mono
+.if (nchan==1) goto LBL_CHAN1
+[fun_eval]
+  var l r
+  const l=0:nchan:vlen/nchan
+  const r=(nchan-1):nchan:vlen/nchan
+  eval ovec=(ivec[l]+ivec[r])*0.5
+.set_key NCHAN 1
+.label LBL_CHAN1
+
+% non-linearities
+[fun_eval]
+  eval ovec=ivec^.9*2.5
+
+% LP and HP filtering
+[time_filter]
+  filter coefficients num 1 $(0:0:(floor(sf*0.003)-1)) 0.3
+  cheby2 HP 200 320 5 40 5
+  cheby2 LP 3750 4000 5 40 5
+  downsampling $(sf/8000)
+.convert to I16
