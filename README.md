@@ -1,5 +1,5 @@
-# SPRaak Software tool
-This software is used to process the given speech data in such way it resembles telephone speech. 
+# [SPRaak](https://homes.esat.kuleuven.be/~spchprog/SPRAAK/html/spr_whatis.html) Software tool
+This software is used to process the given speech data in such way that it resembles telephone speech. 
 
 ## Corpus File
 
